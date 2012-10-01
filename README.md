@@ -1,4 +1,4 @@
 R2Fish
 ======
 
-School project - CLI file encoding with Twofish
+School project - CLI data encryption with Twofish in Ruby
