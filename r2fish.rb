@@ -12,19 +12,28 @@ END
 
 include FileTest
 
-require 'rubygems'  
 require 'getoptlong'
 require 'openssl'
 require 'base64'
 
-require 'Qt4'
-
 require 'cli/help'
 
-require 'resources/icons'
-require 'ui/Ui_R2Fish'
-require 'ui/R2Fish'
-require 'ui/R2Fish_help'
+begin
+  require 'rubygems'
+  require 'Qt4'
+  
+  require 'resources/icons'
+  require 'ui/Ui_R2Fish'
+  require 'ui/R2Fish'
+  require 'ui/R2Fish_help'
+  
+  $GUI_AVAILABLE = true
+rescue LoadError
+  $stderr.puts 'Some GUI deps were not found :: GUI will not be available'
+  $stderr.puts 'Be sure to have "qtbindings" gem installed'
+  $stderr.puts 
+  $GUI_AVAILABLE = false
+end
 
 opts = GetoptLong.new(
   ['--input',             '-i', GetoptLong::REQUIRED_ARGUMENT],
@@ -69,7 +78,7 @@ if @parsedOpts.assoc('--help')
   exit
 end
 
-if !@parsedOpts.assoc('--no-gui') 
+if !@parsedOpts.assoc('--no-gui')  && $GUI_AVAILABLE
 
   app = Qt::Application.new(ARGV)
   
