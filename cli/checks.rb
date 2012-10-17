@@ -41,15 +41,6 @@ end
 #######################################
 # cipher checks
 ###############
-if !@parsedOpts.assoc('--algorithm')
-  $stderr.puts "ERROR: Cipher needs to be defined!"
-  exit
-end
-
-if !['twofish', 'blowfish'].index(@parsedOpts.assoc('--algorithm')[1].downcase)
-  $stderr.puts "ERROR: Unrecognized cipher!"
-  exit
-end
 
 if !@parsedOpts.assoc('--mode')
   $stderr.puts "ERROR: Cipher mode needs to be defined!"
@@ -58,12 +49,6 @@ end
 
 if !['cbc','cfb','ecb','ofb'].index(@parsedOpts.assoc('--mode')[1].downcase)
   $stderr.puts "ERROR: Unrecognized cipher mode!"
-  exit
-end
-
-if 'twofish' == @parsedOpts.assoc('--algorithm')[1].downcase && 
-  !['cbc','ecb'].index(@parsedOpts.assoc('--mode')[1].downcase)
-  $stderr.puts "ERROR: Included implementation of twofish does not support this mode!"
   exit
 end
 

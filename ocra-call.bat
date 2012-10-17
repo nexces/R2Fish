@@ -1,0 +1,1 @@
+ocra --verbose --gem-minimal r2fish.rb

@@ -1,6 +1,0 @@
-[submodule "ruby-mcrypt"]
-	path = ruby-mcrypt
-	url = git://github.com/kingpong/ruby-mcrypt.git
-[submodule "twofish.rb"]
-	path = twofish.rb
-	url = git://github.com/mcarpenter/twofish.rb.git

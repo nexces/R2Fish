@@ -1,6 +1,7 @@
-
-def usage
-  $stdout.puts <<-END
+module Cli
+  
+  def self.help
+<<-END
 Help shall be given to you
 
 Usage: #{__FILE__} [OPTIONS]
@@ -23,18 +24,15 @@ Usage: #{__FILE__} [OPTIONS]
 -d, --decrypt:
     output file becomes decrypted version of input file
   
--a ALGORITHM, --algorithm ALGORITHM
-    cipher to use:
-      Blowfish, Twofish
-  
 -m MODE, --mode MODE:
     cipher mode, which is one of:
-      CBC, ECB for Twofish
-      CBC, CFB, ECB, OFB for Blowfish
+      CBC, CFB, ECB, OFB
   
 -p PASSPHRASE, --passphrase PASSPHRASE:
     passphrase to use
   
 ... and that concludes your basic tutorial
 END
+  end
+  
 end

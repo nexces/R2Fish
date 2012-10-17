@@ -1,41 +1,40 @@
 #!/usr/bin/env ruby
 
+$KCODE='u'
+
 $stdout.puts <<-END
-===========================================
-    BSK.Project - *fish file de/encrypt
-===========================================
+============================================
+   BSK.Project - Blowfish file de/encrypt
+============================================
 
 END
 
 
-$:.push(
-  'twofish.rb/lib', 
-  'twofish.rb/lib/twofish',
-  'parts'
-  )
-
 include FileTest
-  
+
+require 'rubygems'  
 require 'getoptlong'
 require 'openssl'
 require 'base64'
 
-require 'twofish'
+require 'Qt4'
 
-require 'usage'
+require 'cli/help'
 
-
+require 'resources/icons'
+require 'ui/Ui_R2Fish'
+require 'ui/R2Fish'
+require 'ui/R2Fish_help'
 
 opts = GetoptLong.new(
   ['--input',             '-i', GetoptLong::REQUIRED_ARGUMENT],
   ['--output',            '-o', GetoptLong::REQUIRED_ARGUMENT],
-  ['--algorithm',         '-a', GetoptLong::REQUIRED_ARGUMENT],
   ['--mode',              '-m', GetoptLong::REQUIRED_ARGUMENT],
   ['--passphrase',        '-p', GetoptLong::OPTIONAL_ARGUMENT],
   ['--overwrite-output',  '-O', GetoptLong::NO_ARGUMENT],
   ['--encrypt',           '-e', GetoptLong::NO_ARGUMENT],
   ['--decrypt',           '-d', GetoptLong::NO_ARGUMENT],
-  ['--crap',              '-c', GetoptLong::NO_ARGUMENT],
+  ['--no-gui',            '-n', GetoptLong::NO_ARGUMENT],
     
   ['--help',              '-h', GetoptLong::NO_ARGUMENT]
 )
@@ -65,36 +64,24 @@ rescue GetoptLong::MissingArgument
   exit
 end
 
-if @parsedOpts.assoc('--crap')
-  $stdout.puts OpenSSL::Cipher.ciphers
-  exit
-end
-
 if @parsedOpts.assoc('--help')
-  usage
+  $stdout.puts(Cli::help())
   exit
 end
 
-# don't think... do...
-load 'parts/checks.rb'
+if !@parsedOpts.assoc('--no-gui') 
 
-
-if @parsedOpts.assoc('--passphrase')
-  key = @parsedOpts.assoc('--passphrase')[1]
+  app = Qt::Application.new(ARGV)
+  
+  r2fish = R2Fish.new()
+  r2fish.show()
+  
+  app.exec()
+  
+  
 else
-  key = ''
-end
-
-
-if 'twofish' == @parsedOpts.assoc('--algorithm')[1]
-  mode = case @parsedOpts.assoc('--mode')[1].downcase
-    when 'cbc' then Twofish::Mode::CBC
-    when 'ecb' then Twofish::Mode::ECB
-  end
+  # don't think... do...
+  load 'cli/checks.rb'
   
-  tf = Twofish.new(key, :mode => mode)
-  tf.iv = OpenSSL::Random.random_bytes(16)
-  
-  crypted = tf.encrypt(File.open(@parsedOpts.assoc('--input')[1], 'rb').read)
-  puts Base64.encode64(crypted)
+  bf = OpenSSL::Cipher::Cipher.new('bf-' + @parsedOpts.assoc('--mode')[1].downcase)
 end

@@ -1,0 +1,11 @@
+<RCC>
+  <qresource prefix="tabs">
+    <file>1350370362_padlock-open.png</file>
+    <file>1350370385_padlock-closed.png</file>
+  </qresource>
+  <qresource prefix="general">
+    <file>1350377805_save.png</file>
+    <file>1350371625_media-play.png</file>
+    <file>1350370514_help.png</file>
+  </qresource>
+</RCC>
