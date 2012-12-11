@@ -174,10 +174,13 @@
           <x>10</x>
           <y>20</y>
           <width>221</width>
-          <height>53</height>
+          <height>70</height>
          </rect>
         </property>
         <layout class="QFormLayout" name="modeForm">
+         <property name="fieldGrowthPolicy">
+          <enum>QFormLayout::ExpandingFieldsGrow</enum>
+         </property>
          <item row="0" column="0">
           <widget class="QLabel" name="modeLabel">
            <property name="text">
@@ -216,7 +219,7 @@
           </widget>
          </item>
          <item row="1" column="0">
-          <widget class="QLabel" name="subblockLabel">
+          <widget class="QLabel" name="feedbackSizeLabel">
            <property name="text">
             <string>Długość podbloku</string>
            </property>
@@ -225,7 +228,7 @@
          <item row="1" column="1">
           <layout class="QHBoxLayout" name="subblockControl">
            <item>
-            <widget class="QSlider" name="subblock">
+            <widget class="QSlider" name="feedbackSize">
              <property name="autoFillBackground">
               <bool>false</bool>
              </property>
@@ -256,7 +259,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="subblockValueLabel">
+            <widget class="QLabel" name="feedbackSizeValueLabel">
              <property name="text">
               <string>8</string>
              </property>
@@ -390,48 +393,8 @@
            <item>
             <widget class="QComboBox" name="keysize">
              <property name="currentIndex">
-              <number>2</number>
+              <number>-1</number>
              </property>
-             <item>
-              <property name="text">
-               <string>32</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>64</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>128</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>192</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>224</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>256</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>384</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>448</string>
-              </property>
-             </item>
             </widget>
            </item>
            <item>
@@ -452,8 +415,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>94</width>
-        <height>24</height>
+        <width>511</width>
+        <height>185</height>
        </rect>
       </property>
       <attribute name="icon">
@@ -641,7 +604,7 @@
   <tabstop>passwordRetype</tabstop>
   <tabstop>keysize</tabstop>
   <tabstop>mode</tabstop>
-  <tabstop>subblock</tabstop>
+  <tabstop>feedbackSize</tabstop>
   <tabstop>runButton</tabstop>
   <tabstop>helpButton</tabstop>
   <tabstop>password_2</tabstop>
@@ -653,9 +616,9 @@
  </resources>
  <connections>
   <connection>
-   <sender>subblock</sender>
+   <sender>feedbackSize</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>subblockValueLabel</receiver>
+   <receiver>feedbackSizeValueLabel</receiver>
    <slot>setNum(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -733,22 +696,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>runButton</sender>
-   <signal>clicked()</signal>
-   <receiver>R2Fish</receiver>
-   <slot>runButton_clicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>497</x>
-     <y>334</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>638</x>
-     <y>338</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>mode</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>R2Fish</receiver>
@@ -764,6 +711,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>runButton</sender>
+   <signal>released()</signal>
+   <receiver>R2Fish</receiver>
+   <slot>runButton_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>497</x>
+     <y>334</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>638</x>
+     <y>338</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>keysize</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>R2Fish</receiver>
+   <slot>keysize_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>155</x>
+     <y>246</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>655</x>
+     <y>203</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>inputFileButton_clicked()</slot>
@@ -771,5 +750,6 @@
   <slot>helpButton_clicked()</slot>
   <slot>runButton_clicked()</slot>
   <slot>mode_changed()</slot>
+  <slot>keysize_changed()</slot>
  </slots>
 </ui>

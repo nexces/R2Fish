@@ -1,8 +1,8 @@
 =begin
 ** Form generated from reading ui file 'r2fish.ui'
 **
-** Created: śr. paź 17 09:08:08 2012
-**      by: Qt User Interface Compiler version 4.8.2
+** Created: pt. gru 7 18:34:08 2012
+**      by: Qt User Interface Compiler version 4.8.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
 =end
@@ -29,10 +29,10 @@ class Ui_R2Fish
     attr_reader :modeForm
     attr_reader :modeLabel
     attr_reader :mode
-    attr_reader :subblockLabel
+    attr_reader :feedbackSizeLabel
     attr_reader :subblockControl
-    attr_reader :subblock
-    attr_reader :subblockValueLabel
+    attr_reader :feedbackSize
+    attr_reader :feedbackSizeValueLabel
     attr_reader :passwordGroup
     attr_reader :formLayoutWidget
     attr_reader :passwordForm
@@ -147,9 +147,10 @@ class Ui_R2Fish
     @modeGroup.geometry = Qt::Rect.new(260, 110, 241, 91)
     @formLayoutWidget_3 = Qt::Widget.new(@modeGroup)
     @formLayoutWidget_3.objectName = "formLayoutWidget_3"
-    @formLayoutWidget_3.geometry = Qt::Rect.new(10, 20, 221, 53)
+    @formLayoutWidget_3.geometry = Qt::Rect.new(10, 20, 221, 70)
     @modeForm = Qt::FormLayout.new(@formLayoutWidget_3)
     @modeForm.objectName = "modeForm"
+    @modeForm.fieldGrowthPolicy = Qt::FormLayout::ExpandingFieldsGrow
     @modeForm.setContentsMargins(0, 0, 0, 0)
     @modeLabel = Qt::Label.new(@formLayoutWidget_3)
     @modeLabel.objectName = "modeLabel"
@@ -166,31 +167,31 @@ class Ui_R2Fish
 
     @modeForm.setWidget(0, Qt::FormLayout::FieldRole, @mode)
 
-    @subblockLabel = Qt::Label.new(@formLayoutWidget_3)
-    @subblockLabel.objectName = "subblockLabel"
+    @feedbackSizeLabel = Qt::Label.new(@formLayoutWidget_3)
+    @feedbackSizeLabel.objectName = "feedbackSizeLabel"
 
-    @modeForm.setWidget(1, Qt::FormLayout::LabelRole, @subblockLabel)
+    @modeForm.setWidget(1, Qt::FormLayout::LabelRole, @feedbackSizeLabel)
 
     @subblockControl = Qt::HBoxLayout.new()
     @subblockControl.objectName = "subblockControl"
-    @subblock = Qt::Slider.new(@formLayoutWidget_3)
-    @subblock.objectName = "subblock"
-    @subblock.autoFillBackground = false
-    @subblock.minimum = 1
-    @subblock.maximum = 8
-    @subblock.pageStep = 1
-    @subblock.value = 8
-    @subblock.orientation = Qt::Horizontal
-    @subblock.invertedAppearance = false
-    @subblock.invertedControls = false
-    @subblock.tickPosition = Qt::Slider::NoTicks
+    @feedbackSize = Qt::Slider.new(@formLayoutWidget_3)
+    @feedbackSize.objectName = "feedbackSize"
+    @feedbackSize.autoFillBackground = false
+    @feedbackSize.minimum = 1
+    @feedbackSize.maximum = 8
+    @feedbackSize.pageStep = 1
+    @feedbackSize.value = 8
+    @feedbackSize.orientation = Qt::Horizontal
+    @feedbackSize.invertedAppearance = false
+    @feedbackSize.invertedControls = false
+    @feedbackSize.tickPosition = Qt::Slider::NoTicks
 
-    @subblockControl.addWidget(@subblock)
+    @subblockControl.addWidget(@feedbackSize)
 
-    @subblockValueLabel = Qt::Label.new(@formLayoutWidget_3)
-    @subblockValueLabel.objectName = "subblockValueLabel"
+    @feedbackSizeValueLabel = Qt::Label.new(@formLayoutWidget_3)
+    @feedbackSizeValueLabel.objectName = "feedbackSizeValueLabel"
 
-    @subblockControl.addWidget(@subblockValueLabel)
+    @subblockControl.addWidget(@feedbackSizeValueLabel)
 
 
     @modeForm.setLayout(1, Qt::FormLayout::FieldRole, @subblockControl)
@@ -264,7 +265,7 @@ class Ui_R2Fish
     @toolBox.addItem(@encryption, icon, Qt::Application.translate("R2Fish", "Szyfrowanie", nil, Qt::Application::UnicodeUTF8))
     @decryption = Qt::Widget.new()
     @decryption.objectName = "decryption"
-    @decryption.geometry = Qt::Rect.new(0, 0, 94, 24)
+    @decryption.geometry = Qt::Rect.new(0, 0, 511, 185)
     @formLayoutWidget_5 = Qt::Widget.new(@decryption)
     @formLayoutWidget_5.objectName = "formLayoutWidget_5"
     @formLayoutWidget_5.geometry = Qt::Rect.new(20, 10, 471, 51)
@@ -329,23 +330,24 @@ class Ui_R2Fish
     Qt::Widget.setTabOrder(@password, @passwordRetype)
     Qt::Widget.setTabOrder(@passwordRetype, @keysize)
     Qt::Widget.setTabOrder(@keysize, @mode)
-    Qt::Widget.setTabOrder(@mode, @subblock)
-    Qt::Widget.setTabOrder(@subblock, @runButton)
+    Qt::Widget.setTabOrder(@mode, @feedbackSize)
+    Qt::Widget.setTabOrder(@feedbackSize, @runButton)
     Qt::Widget.setTabOrder(@runButton, @helpButton)
     Qt::Widget.setTabOrder(@helpButton, @password_2)
     Qt::Widget.setTabOrder(@password_2, @outputFile)
     Qt::Widget.setTabOrder(@outputFile, @inputFile)
 
     retranslateUi(r2Fish)
-    Qt::Object.connect(@subblock, SIGNAL('valueChanged(int)'), @subblockValueLabel, SLOT('setNum(int)'))
+    Qt::Object.connect(@feedbackSize, SIGNAL('valueChanged(int)'), @feedbackSizeValueLabel, SLOT('setNum(int)'))
     Qt::Object.connect(@actionQuit, SIGNAL('triggered()'), r2Fish, SLOT('close()'))
     Qt::Object.connect(@inputFileButton, SIGNAL('clicked()'), r2Fish, SLOT('inputFileButton_clicked()'))
     Qt::Object.connect(@outputFileButton, SIGNAL('clicked()'), r2Fish, SLOT('outputFileButton_clicked()'))
     Qt::Object.connect(@helpButton, SIGNAL('clicked()'), r2Fish, SLOT('helpButton_clicked()'))
-    Qt::Object.connect(@runButton, SIGNAL('clicked()'), r2Fish, SLOT('runButton_clicked()'))
     Qt::Object.connect(@mode, SIGNAL('currentIndexChanged(int)'), r2Fish, SLOT('mode_changed()'))
+    Qt::Object.connect(@runButton, SIGNAL('released()'), r2Fish, SLOT('runButton_clicked()'))
+    Qt::Object.connect(@keysize, SIGNAL('currentIndexChanged(int)'), r2Fish, SLOT('keysize_changed()'))
 
-    @keysize.setCurrentIndex(2)
+    @keysize.setCurrentIndex(-1)
 
 
     Qt::MetaObject.connectSlotsByName(r2Fish)
@@ -371,8 +373,8 @@ class Ui_R2Fish
         Qt::Application.translate("R2Fish", "CBC", nil, Qt::Application::UnicodeUTF8),
         Qt::Application.translate("R2Fish", "CFB", nil, Qt::Application::UnicodeUTF8),
         Qt::Application.translate("R2Fish", "OFB", nil, Qt::Application::UnicodeUTF8)])
-    @subblockLabel.text = Qt::Application.translate("R2Fish", "D\305\202ugo\305\233\304\207 podbloku", nil, Qt::Application::UnicodeUTF8)
-    @subblockValueLabel.text = Qt::Application.translate("R2Fish", "8", nil, Qt::Application::UnicodeUTF8)
+    @feedbackSizeLabel.text = Qt::Application.translate("R2Fish", "D\305\202ugo\305\233\304\207 podbloku", nil, Qt::Application::UnicodeUTF8)
+    @feedbackSizeValueLabel.text = Qt::Application.translate("R2Fish", "8", nil, Qt::Application::UnicodeUTF8)
     @passwordGroup.title = Qt::Application.translate("R2Fish", "Ustawienia has\305\202a", nil, Qt::Application::UnicodeUTF8)
     @passwordLabel.text = Qt::Application.translate("R2Fish", "Has\305\202o", nil, Qt::Application::UnicodeUTF8)
     @passwordRetypeLabel.text = Qt::Application.translate("R2Fish", "Weryfikacja", nil, Qt::Application::UnicodeUTF8)
@@ -384,14 +386,6 @@ class Ui_R2Fish
     @passwordRetype.placeholderText = Qt::Application.translate("R2Fish", "Powt\303\263rzenie has\305\202a w celu weryfikacji", nil, Qt::Application::UnicodeUTF8)
     @keysizeGroup.title = Qt::Application.translate("R2Fish", "Ustawienia szyfru", nil, Qt::Application::UnicodeUTF8)
     @keysizeLabel.text = Qt::Application.translate("R2Fish", "D\305\202ugo\305\233\304\207 klucza", nil, Qt::Application::UnicodeUTF8)
-    @keysize.insertItems(0, [Qt::Application.translate("R2Fish", "32", nil, Qt::Application::UnicodeUTF8),
-        Qt::Application.translate("R2Fish", "64", nil, Qt::Application::UnicodeUTF8),
-        Qt::Application.translate("R2Fish", "128", nil, Qt::Application::UnicodeUTF8),
-        Qt::Application.translate("R2Fish", "192", nil, Qt::Application::UnicodeUTF8),
-        Qt::Application.translate("R2Fish", "224", nil, Qt::Application::UnicodeUTF8),
-        Qt::Application.translate("R2Fish", "256", nil, Qt::Application::UnicodeUTF8),
-        Qt::Application.translate("R2Fish", "384", nil, Qt::Application::UnicodeUTF8),
-        Qt::Application.translate("R2Fish", "448", nil, Qt::Application::UnicodeUTF8)])
     @label.text = Qt::Application.translate("R2Fish", "bit\303\263w", nil, Qt::Application::UnicodeUTF8)
     @toolBox.setItemText(@toolBox.indexOf(@encryption), Qt::Application.translate("R2Fish", "Szyfrowanie", nil, Qt::Application::UnicodeUTF8))
     @passwordLabel_2.text = Qt::Application.translate("R2Fish", "Has\305\202o", nil, Qt::Application::UnicodeUTF8)

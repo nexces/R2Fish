@@ -42,16 +42,30 @@ end
 # cipher checks
 ###############
 
-if !@parsedOpts.assoc('--mode')
-  $stderr.puts "ERROR: Cipher mode needs to be defined!"
-  exit
-end
-
-if !['cbc','cfb','ecb','ofb'].index(@parsedOpts.assoc('--mode')[1].downcase)
-  $stderr.puts "ERROR: Unrecognized cipher mode!"
-  exit
-end
-
-if !@parsedOpts.assoc('--passphrase') || @parsedOpts.assoc('--passphrase')[1].length == 0
-  $stdout.puts "WARNING: Yes... no password... so secure!"
+if @parsedOpts.assoc('--encrypt')
+  
+  if !@parsedOpts.assoc('--mode')
+    $stderr.puts "ERROR: Cipher mode needs to be defined!"
+    exit
+  end
+  
+  if !['cbc','cfb','ecb','ofb'].index(@parsedOpts.assoc('--mode')[1].downcase)
+    $stderr.puts "ERROR: Unrecognized cipher mode!"
+    exit
+  end
+  
+  if !@parsedOpts.assoc('--passphrase') || @parsedOpts.assoc('--passphrase')[1].length == 0
+    $stdout.puts "WARNING: Yes... no password... so secure!"
+  end
+  
+  if ['cfb','ofb'].index(@parsedOpts.assoc('--mode')[1].downcase) && !@parsedOpts.assoc('--feedback')
+    $stderr.puts "Feedback size should be defined"
+    exit
+  end
+     
+  if !@parsedOpts.assoc('--keysize') || !(7..56).to_a.index(@parsedOpts.assoc('--keysize')[1].to_i)
+    $stderr.puts "Unsupported keysize"
+    exit
+  end
+  
 end

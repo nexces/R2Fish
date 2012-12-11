@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class R2Fish
   def self.help
 <<-END
