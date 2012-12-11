@@ -103,11 +103,7 @@ def crypto (fin, fout, task, password, keysize, mode, feedbackSize, interface)
   cipherKey.key_len = keyFromPassword.length
   cipherKey.key = keyFromPassword
   
-  if (mode.downcase == 'cbc')
-    cipher = OpenSSL::Cipher.new('bf-cbc')
-  else
-    cipher = OpenSSL::Cipher.new('bf-ecb')
-  end
+
   
   # hdr_len:            1
   # cipher_name_len:    1
@@ -141,6 +137,11 @@ def crypto (fin, fout, task, password, keysize, mode, feedbackSize, interface)
     
     # $stdout.puts "sessionKeyEncrypted: " + sessionKeyEncrypted
     
+    if (mode.downcase == 'cbc')
+      cipher = OpenSSL::Cipher.new('bf-cbc')
+    else
+      cipher = OpenSSL::Cipher.new('bf-ecb')
+    end
     
     # for OFB and CFB we're always encrypting ;)
     if (['cfb', 'ofb'].include?(mode.downcase))
@@ -167,7 +168,11 @@ def crypto (fin, fout, task, password, keysize, mode, feedbackSize, interface)
   end
   
   if (task == "encryption")
-
+    if (mode.downcase == 'cbc')
+      cipher = OpenSSL::Cipher.new('bf-cbc')
+    else
+      cipher = OpenSSL::Cipher.new('bf-ecb')
+    end
     cipher.encrypt()
     cipherKey.encrypt()
     
@@ -206,14 +211,12 @@ def crypto (fin, fout, task, password, keysize, mode, feedbackSize, interface)
 
   # $stdout.puts 'IV/shiftRegister :: ' + iv
   
-#  if @parsedOpts.assoc('--debug')
-    $stdout.puts "Entering " + task
-    $stdout.puts "Mode: " + mode.upcase
-    $stdout.puts "feedbackSize: " + feedbackSize.to_s
-    $stdout.puts "IV: " + iv.unpack("H*")[0]
-    $stdout.puts "shiftRegister: " + shiftRegister.unpack("H*")[0]
-    $stdout.puts "sessionKey: " + sessionKey.unpack("H*")[0]
-#  end
+#  $stdout.puts "Entering " + task
+#  $stdout.puts "Mode: " + mode.upcase
+#  $stdout.puts "feedbackSize: " + feedbackSize.to_s
+#  $stdout.puts "IV: " + iv.unpack("H*")[0]
+#  $stdout.puts "shiftRegister: " + shiftRegister.unpack("H*")[0]
+#  $stdout.puts "sessionKey: " + sessionKey.unpack("H*")[0]
   
   
   blockNo = 0;
@@ -254,9 +257,6 @@ def crypto (fin, fout, task, password, keysize, mode, feedbackSize, interface)
     begin
       foutHandler.write(cipher.final())
     rescue
-#      if @parsedOpts.assoc('--debug')
-        $stderr.puts "Something is wrong... :/"
-#      end
     end
   end
   finHandler.close()
