@@ -280,10 +280,16 @@ else
   load 'cli/checks.rb'
   if (@parsedOpts.assoc('--encrypt'))
     task = 'encryption'
+    keysize = @parsedOpts.assoc('--keysize')[1].to_i
+    mode = @parsedOpts.assoc('--mode')[1]
+    feedbackSize = @parsedOpts.assoc('--feedback')[1].to_i 
   end
   
   if (@parsedOpts.assoc('--decrypt'))
     task = 'decryption'
+    keysize = nil
+    mode = nil
+    feedbackSize = nil
   end
   
   crypto(
@@ -291,9 +297,9 @@ else
     @parsedOpts.assoc('--output')[1],
     task,
     @parsedOpts.assoc('--passphrase')[1],
-    @parsedOpts.assoc('--keysize')[1].to_i,
-    @parsedOpts.assoc('--mode')[1],
-    @parsedOpts.assoc('--feedback')[1].to_i,
+    keysize,
+    mode,
+    feedbackSize,
     nil)
 end
 
